@@ -1,0 +1,24 @@
+{
+  "name": "simplystreamloadingtemplate",
+  "version": "1.0.0",
+  "description": "This repository contains a single-file Single Page Application (SPA) template for a customizable loading screen. The template is built using HTML, CSS, and JavaScript, all within one `index.html` file.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"No build step required\"",
+    "start": "node server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WonderInteractive/SimplyStreamLoadingTemplate.git"
+  },
+  "keywords": [],
+  "author": "SimplyStream",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/WonderInteractive/SimplyStreamLoadingTemplate/issues"
+  },
+  "homepage": "https://github.com/WonderInteractive/SimplyStreamLoadingTemplate#readme",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}

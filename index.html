@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            overflow: hidden;
+        }
+
+        #contentFrame {
+            display: none; /* Hide iframe initially */
+            width: 100%;
+            height: 500px;
+        }
+
+        .powered-by {
+            font-size: 12px;
+            color: white;
+            z-index: 100001;
+        }
+
+        .elementToFadeInAndOut {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            font-size: 64px;
+            color: #ce07ee;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            -webkit-animation: fadeinout 4s linear forwards;
+            animation: fadeinout 4s linear forwards;
+            opacity: 0;
+            text-align: center;
+            background: black;
+        }
+
+        @-webkit-keyframes fadeinout {
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeinout {
+            50% {
+                opacity: 1;
+            }
+        }
+
+        #loadingtext {
+            left: 50%;
+            top: calc(80% + 50px);
+            position: absolute;
+            transform: translate(-50%, -50%) matrix(1, 0, 0, 1, 0, 0);
+            color: #b300ff;
+        }
+
+        #outline {
+            stroke-dasharray: 2.427766571px, 242.7766571045px;
+            stroke-dashoffset: 0;
+            animation: anim 1.6s linear infinite;
+            background: black;
+            width: 100px;
+            height: 10px;
+        }
+
+        @keyframes anim {
+            12.5% {
+                stroke-dasharray: 33.9887319946px, 242.7766571045px;
+                stroke-dashoffset: -26.7054322815px;
+            }
+
+            43.75% {
+                stroke-dasharray: 84.9718299866px, 242.7766571045px;
+                stroke-dashoffset: -84.9718299866px;
+            }
+
+            100% {
+                stroke-dasharray: 2.427766571px, 242.7766571045px;
+                stroke-dashoffset: -240.3488905334px;
+            }
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+        }
+
+        .loading-percentage {
+            color: #b300ff;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #b300ff, 0 0 20px #b300ff;
+            user-select: none;
+        }
+
+        .loading-bar-wrapper {
+            width: 500px;
+            height: 20px;
+            background-color: #3a0072;
+            border: 2px solid #b300ff;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 10px #b300ff, 0 0 20px #b300ff;
+        }
+
+        .loading-bar-segments {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        .segment {
+            flex-grow: 1;
+            height: 100%;
+            border-right: 1px solid #3a0072;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .segment:last-child {
+                border-right: none;
+            }
+
+            .segment.active {
+                background-color: #b300ff;
+                box-shadow: 0 0 10px #b300ff, 0 0 20px #b300ff, 0 0 30px #b300ff;
+            }
+
+                .segment.active::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+                    animation: shine 1s infinite;
+                }
+
+        @keyframes shine {
+            to {
+                left: 100%;
+            }
+        }
+
+        @keyframes neonGlowFadeOut {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 5px #b300ff, 0 0 10px #b300ff, 0 0 20px #b300ff, 0 0 40px #b300ff;
+            }
+
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 10px #d27fff, 0 0 20px #d27fff, 0 0 40px #d27fff, 0 0 80px #d27fff;
+            }
+
+            100% {
+                opacity: 0;
+                box-shadow: 0 0 5px #d27fff, 0 0 10px #d27fff, 0 0 20px #d27fff, 0 0 40px #d27fff;
+            }
+        }
+
+        .neon-glow-fade-out {
+            animation: neonGlowFadeOut .5s forwards;
+        }
+
+        @keyframes neonGlowFadeOutText {
+            0% {
+                opacity: 1;
+                text-shadow: 0 0 10px #b300ff, 0 0 20px #b300ff, 0 0 30px #b300ff;
+            }
+
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 20px #d27fff, 0 0 40px #d27fff, 0 0 60px #b300ff;
+            }
+
+            100% {
+                opacity: 0;
+                text-shadow: 0 0 10px #d27fff, 0 0 20px #d27fff, 0 0 30px #b300ff;
+            }
+        }
+
+        .neon-glow-fade-out-text {
+            animation: neonGlowFadeOutText .5s forwards;
+        }
+    </style>
+</head>
+<body>
+    <iframe style="width: 100vw; height: 100vh;" allow="cross-origin-isolated" crossorigin="anonymous"></iframe>
+    <div class="loading-container">
+        <div class="powered-by">Powered by SimplyStream</div>
+        <div class="loading-percentage">0%</div>
+        <div class="loading-bar-wrapper">
+            <div class="loading-bar-segments">
+                <!-- 20 segments -->
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const route = 'route.yourdomain.com';
+        function updateProgress(progress) {
+            const loadingPercentages = document.querySelectorAll('.loading-percentage')
+
+            loadingPercentages.forEach((loadingPercentage, index) => {
+                loadingPercentage.textContent = String(progress) + '%';
+            });
+
+            const activeSegments = Math.floor(progress / 5);
+            const segments = document.querySelectorAll('.segment');
+            segments.forEach((segment, index) => {
+                if (index < activeSegments) {
+                    segment.classList.add('active');
+                } else {
+                    segment.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('message', function (event) {
+            if (event.origin !== `https://${route}`) return;
+            const json = event.data;
+            if (json.type === 'progress') {
+                updateProgress(json.value)
+                if (json.value === 100) {
+                    // Hide the loader and show the iframe
+                    const loader = document.querySelector('.loading-container');
+                    loader.style.display = 'none';
+                    const iframe = document.querySelector('iframe');
+                    iframe.style.display = 'block';
+
+                }
+            }
+        }, false);
+        console.log('Loading page script loaded');
+        // Load environment variables
+        fetch('/getToken?route=' + route)
+            .then(response => response.json())
+            .then(response => {
+                const token = response.result.token_id;
+                // Get the iframe element
+                const iframe = document.querySelector('iframe');
+                iframe.src = `https://${route}?token=${token}`;
+            });
+    </script>
+</body>
+</html>

@@ -23,6 +23,7 @@ Thumbs.db
 *.sublime-workspace
 
 # Ignore environment variable files
+env
 .env
 .env.local
 .env.*.local
@@ -35,3 +36,7 @@ yarn-error.log*
 # Ignore coverage reports
 coverage/
 *.lcov
+
+# 
+headers.json
+package-lock.json
